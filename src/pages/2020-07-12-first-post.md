@@ -6,4 +6,4 @@ title: "Hello world!"
 type: "BLOG"
 ---
 
-hello world
+hello world!
