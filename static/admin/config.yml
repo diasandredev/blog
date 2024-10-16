@@ -1,12 +1,12 @@
 backend:
   name: git-gateway
-  branch: master
+  branch: main
 
 media_folder: static/img
 public_folder: /img
 
 collections:
-  - name: "my-blog-andre-dias"
+  - name: "blog"
     label: "My blog"
     folder: "src/pages"
     create: true
