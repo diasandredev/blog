@@ -1,77 +1,67 @@
 ---
 layout: blog
+hidden: false
 path: /kotlin-basics-null-safety
-title: Kotlin basics - null safety
-date: 2022-11-19T20:10:05.935Z
+title: "[Kotlin basics] Surviving Null Safety"
 tags: Kotlin
+date: 2025-12-26T13:58:44.853Z
 ---
-H﻿ello,
+Hey everyone! I’m starting a series on Kotlin basics, and we have to kick things off with one of its most powerful features: **Null Safety**. 
 
-I﻿'m planning to write some posts about Kotlin, the first one is about null safety.
+In Kotlin, if you say something is a **String**, it **must** be a non-nullable value. Period. To allow "nothingness," you have to be explicit by using the `?` operator.
 
-I﻿ read last year the book [Effective Kotlin from Marcin Moskala](https://leanpub.com/effectivekotlin), so I plan to use the book as a reference for some points and will write the item number if you want to read later.
+I’ve been diving into *[Effective Kotlin](https://leanpub.com/effectivekotlin)* by Marcin Moskala (highly recommend it!) and some great articles from *[TypeAlias](https://typealias.com/start/kotlin-nulls/)*. One thing to keep in mind is that `null` isn't just "nothing"—it’s actually the only instance of the `Nothing?` type, which sits at the very bottom of the Kotlin type hierarchy.
 
-> Item 8: Handle nulls properly
->
-> In general, there are 3 ways of how nullable types can be handled.
-> We can:
->
-> 1. Handling nullability safely using safe call ?., smart casting, Elvis operator, etc.
-> 2. Throw an error
-> 3. Refactor this function or property so that it won’t be nullable
+### 1. The Magic Question Mark (`?`)
 
-* **Null safety**
+In Kotlin, types are **non-nullable** by default. To tell the compiler that a variable can hold a null value, you add the question mark:
 
-  K﻿otlin has a built-in null safety feature, so if your code throws `NullPointerException()`, it's possible that you are doing something wrong. For Kotlin to understand if some value can be null or not, put `?` after type.
+```kotlin
+val name: String? = null // Explicitly nullable
+```
 
-  ```kotlin
-  private val someValue: String? = null
-  ```
+### 2. Safe Call (`?.`)
 
-  1. Y﻿ou can access attributes from some nullable value using safe call. The result value will be nullable.
+Instead of those old-school `if (obj != null)` checks everywhere, we use the safe call. If the object is null, the expression just returns null instead of throwing an exception.
 
-     ```kotlin
-     data class SomeObject(val name: String)
+```
+val length = name?.length
+```
 
-     private val someValue: SomeObject? = SomeObject("Andre")
+### 3. Elvis Operator (`?:`)
 
-     someValue.name //compilation error because someValue can be null
+This is your "Plan B". It allows you to provide a default value whenever an expression results in null.
 
-     someValue?.name //using safe call
-     ```
-  2. K﻿otlin will **smart cast** values for you. For example, when using `requireNotNull`, after that point Kotlin will recognize your value as not nullable because otherwise `IllegalArgumentException` will be thrown.
+```
+val displayName = name ?: "Guest"
+```
 
-     ```kotlin
-     private val someValue: String? = null
+### 4. Smart Casting
 
-     val newValue: String = requireNotNull(someValue) //newValue will be not nullable
+Kotlin is smart. If you perform a null check (like `if (name != null)`), the compiler automatically casts the variable to a non-nullable type inside that scope.
 
-     if(someValue != null) { //inside if someValue will be not nullable } 
-     ```
-  3. You can use **Elvis operator** to handle null values. It's possible to throw exception too.
+### 5. The Double Bang (`!!`)
 
-     ```kotlin
-     fun example() : String? = null
+The "trust me, I know what I'm doing" operator. It forces a nullable value into a non-nullable one, but if it's actually null, your app **will** crash. Use it very sparingly.
 
-     val value: String = example() ?: "another string"
+- - -
 
-     val value: String = example() ?: throw IllegalArgumentException("error")
-     ```
-  4. Kotlin's collections has available a lot of functions to handle nulls. 
+### 🚨 The "Real World" Trap: Avro, Kafka, and toString() at iFood
 
-     ```kotlin
-     //when you need to first map values and filter null values after.
+I wanted to wrap up with a practical lesson I've learned during my time at **iFood**. This is a mistake I've seen even senior devs make, and it’s a tricky one because **the IDE won’t warn you.**
 
-     list.map { it?.toString() }.filter { it != null } 
+* **The Scenario:** We use **Avro** to consume events from **Kafka**. When working with Avro, string values often come as a `CharSequence`. To map these into our internal Kotlin Data Classes, we need to call `.toString()` to get a proper `String`.
+* **The Mistake:** You assume that calling `.toString()` on that field is fine because it’s a common conversion.
+* **The Trap:** Since `toString()` is available on `Any?`, the compiler won't highlight this as an error. However, calling `.toString()` on a nullable `CharSequence` without a safe call is a recipe for disaster.
+* **The Result:** If the Avro record arrives with a null value for that field, calling `date.toString()` will throw a **NullPointerException**.
+* **The Critical Impact:** At iFood, we process **millions of events**. A crash like this in a high-volume pipeline can be catastrophic. If the reprocessing flow fails, it can lead to people not receiving their money on time. We're talking about real impact on people's lives and a massive amount of stress for the engineering team trying to recover the data.
 
-     list.map { it?.toString() }.filterNotNull()
+**My takeaway:** This is why I always recommend **maximum attention during Code Reviews**. Whenever you're converting types from external events, always use the safe call: `date?.toString()`. It’s a tiny detail that prevents huge production disasters.
 
-     //prefer using less operations
+- - -
 
-     list.mapNotNull { it?.toString() } 
-     ```
-  5. **A﻿void using !!**, this operator only quietly hides the nullability. If the value is null, Kotlin will throw NPE. The only acceptable usage is when your project uses some java library that doesn't integrate with Kotlin.
+**Bottom line:** Kotlin was built to make nulls explicit. Use that to your advantage and keep an eye out for those sneaky `toString()` conversions during PR reviews!
 
-That's it for this post, next post will be about immutability.
+Have you ever had a NullPointerException sneak into your event consumers? Let's chat in the comments! ✌️
 
-t﻿ks
+- - -
