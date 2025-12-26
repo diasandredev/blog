@@ -40,6 +40,10 @@ const Description = styled.div`
   color: var(--color-text-primary);
   line-height: 1.5;
   border-left: 4px solid var(--color-accent);
+
+  p {
+    color: var(--color-text-primary);
+  }
 `;
 
 const CompanyLink = styled.span`

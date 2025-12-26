@@ -130,8 +130,8 @@ const buildTagsColors = (tags) =>
         color = '#B497D6';
         break;
       case 'React':
-      case 'Gatsby':
-        color = '#61dafb';
+      case 'Javascript':
+        color = '#e03838ff';
         break;
       default:
         color = '#94a3b8';
