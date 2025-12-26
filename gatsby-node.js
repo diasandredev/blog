@@ -11,6 +11,7 @@ exports.createPages = ({ graphql, actions }) => {
           query {
             allMarkdownRemark(
               sort: { order: ASC, fields: [frontmatter___date] }
+              filter: { frontmatter: { hidden: { ne: true } } }
             ) {
               edges {
                 node {
@@ -56,4 +57,14 @@ exports.createPages = ({ graphql, actions }) => {
       ),
     );
   });
+};
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type MarkdownRemarkFrontmatter implements Node {
+      hidden: Boolean
+    }
+  `;
+  createTypes(typeDefs);
 };

@@ -15,7 +15,7 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
-    `gatsby-plugin-netlify-cms`,
+    `gatsby-plugin-decap-cms`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {

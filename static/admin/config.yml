@@ -13,6 +13,7 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - {label: "Hidden", name: "hidden", widget: "boolean", default: false}
       - {label: "Path", name: "path", widget: "string", default: "/"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Tags", name: "tags", widget: "string"}
