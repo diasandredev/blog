@@ -68,7 +68,7 @@ const buildTagsColors = (tags) =>
         color = '#B497D6';
         break;
       case 'React':
-      case 'Javacript':
+      case 'Javascript':
         color = '#e03838ff';
         break;
       default:
