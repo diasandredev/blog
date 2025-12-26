@@ -20,7 +20,7 @@ My work focuses on solving the complex distributed systems challenges that come 
     },
     `gatsby-plugin-decap-cms`,
     `gatsby-plugin-styled-components`,
-    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-react-helmet-async`,
     `gatsby-transformer-json`,
     {
       resolve: `gatsby-source-filesystem`,

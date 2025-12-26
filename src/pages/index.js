@@ -18,23 +18,23 @@ export default IndexPage;
 
 export const query = graphql`
   query HomepageQuery {
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { hidden: { ne: true } } }
-    ) {
-      edges {
-        node {
-          frontmatter {
-            title
-            path
-            externalurl
-            date
-            tags
-          }
+  allMarkdownRemark(
+    sort: {frontmatter: {date: DESC}}
+    filter: {frontmatter: {hidden: {ne: true}}}
+  ) {
+    edges {
+      node {
+        frontmatter {
+          title
+          path
+          externalurl
+          date
+          tags
         }
       }
     }
   }
+}
 `;
 
 
