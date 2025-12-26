@@ -16,11 +16,12 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.main`
   flex: 1;
-  padding: var(--spacing-lg) 0;
+  padding-top: ${props => props.paddingTop || 'var(--spacing-lg)'};
+  padding-bottom: var(--spacing-lg);
   width: 100%;
 `;
 
-const Layout = ({ children }) => {
+const Layout = ({ children, paddingTop }) => {
     return (
         <>
             <GlobalStyles />
@@ -34,7 +35,7 @@ const Layout = ({ children }) => {
 
             <MainWrapper>
                 <Header />
-                <ContentWrapper>
+                <ContentWrapper paddingTop={paddingTop}>
                     {children}
                 </ContentWrapper>
                 <Footer />

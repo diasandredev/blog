@@ -28,7 +28,7 @@ const ProjectsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: var(--spacing-md);
   overflow: hidden;
-  max-height: ${props => props.expanded ? '1000px' : '110px'};
+  max-height: ${props => props.$expanded ? '1000px' : '110px'};
   transition: max-height 0.5s ease-in-out;
   padding: 4px; /* Space for shadows */
 `;
@@ -198,7 +198,7 @@ const ProjectsDock = () => {
   return (
     <DockWrapper ref={dockRef} style={{ position: 'relative' }}>
       <SectionTitle>some projects</SectionTitle>
-      <ProjectsGrid expanded={expanded}>
+      <ProjectsGrid $expanded={expanded}>
         {projects.map((p, i) => (
           <ProjectItem key={i} href={p.url} target="_blank" rel="noopener noreferrer">
             <IconWrapper

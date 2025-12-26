@@ -44,6 +44,12 @@ const Tag = styled.span`
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const buildTagsColors = (tags) =>
@@ -82,7 +88,12 @@ const Topic = styled.span`
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
-  display: block;
+  display: inline-block;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const PostTitle = styled.h3`
@@ -98,13 +109,33 @@ const PostTitle = styled.h3`
   }
 `;
 
-const Post = ({ post }) => {
+const Post = ({ post, onFilter }) => {
   const hasTags = post.tags != null && post.tags.length > 0;
   const tags = hasTags ? buildTagsColors(post.tags) : [];
 
+  const handleTopicClick = (e) => {
+    if (onFilter && post.topic) {
+      e.stopPropagation();
+      e.preventDefault();
+      onFilter('topic', post.topic);
+    }
+  };
+
+  const handleTagClick = (e, tag) => {
+    if (onFilter) {
+      e.stopPropagation();
+      e.preventDefault();
+      onFilter('tag', tag);
+    }
+  };
+
   return (
     <PostCard>
-      {post.topic && <Topic>{post.topic}</Topic>}
+      {post.topic && (
+        <Topic onClick={handleTopicClick}>
+          {post.topic}
+        </Topic>
+      )}
 
       <PostTitle>
         <Link to={post.path}>{post.title}</Link>
@@ -113,7 +144,13 @@ const Post = ({ post }) => {
       {tags.length > 0 && (
         <TagsWrapper style={{ marginBottom: '0.5rem' }}>
           {tags.map((tag, index) => (
-            <Tag key={index} color={tag.color}>{tag.text}</Tag>
+            <Tag
+              key={index}
+              color={tag.color}
+              onClick={(e) => handleTagClick(e, tag.text)}
+            >
+              {tag.text}
+            </Tag>
           ))}
         </TagsWrapper>
       )}
