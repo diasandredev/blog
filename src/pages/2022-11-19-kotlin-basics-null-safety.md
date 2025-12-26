@@ -58,10 +58,8 @@ I wanted to wrap up with a practical lesson I've learned during my time at **iFo
 
 **My takeaway:** This is why I always recommend **maximum attention during Code Reviews**. Whenever you're converting types from external events, always use the safe call: `date?.toString()`. It’s a tiny detail that prevents huge production disasters.
 
-- - -
-
 **Bottom line:** Kotlin was built to make nulls explicit. Use that to your advantage and keep an eye out for those sneaky `toString()` conversions during PR reviews!
 
-Have you ever had a NullPointerException sneak into your event consumers? Let's chat in the comments! ✌️
+Cheers! ✌️
 
 - - -
