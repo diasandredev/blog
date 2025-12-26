@@ -1,31 +1,27 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Header from '../components/Header';
+import Layout from '../components/Layout';
 import Content from '../components/Content';
-import { IconContext } from 'react-icons';
 import { mapData } from '../helpers/postsHelper';
-import { Container } from '../style';
-import { Helmet } from 'react-helmet';
 
-const Layout = ({ data }) => {
+const IndexPage = ({ data }) => {
   const content = mapData(data);
   return (
-    <IconContext.Provider value={{ className: 'icon' }}>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>tech blog</title>
-      </Helmet>
-      <Container>
-        <Header />
-        <Content content={content} />
-      </Container>
-    </IconContext.Provider>
+    <Layout>
+      <h2 style={{ fontSize: '2rem', marginBottom: 'var(--spacing-lg)', marginTop: '0' }}>Posts</h2>
+      <Content content={content} />
+    </Layout>
   );
 };
 
+export default IndexPage;
+
 export const query = graphql`
   query HomepageQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: { frontmatter: { hidden: { ne: true } } }
+    ) {
       edges {
         node {
           frontmatter {
@@ -41,4 +37,4 @@ export const query = graphql`
   }
 `;
 
-export default Layout;
+
