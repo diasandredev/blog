@@ -18,7 +18,13 @@ My work focuses on solving the complex distributed systems challenges that come 
         path: `${__dirname}/src/pages`,
       },
     },
-    `gatsby-plugin-decap-cms`,
+    {
+      resolve: `gatsby-plugin-decap-cms`,
+      options: {
+        modulePath: `${__dirname}/src/cms/cms.js`,
+        manualInit: true,
+      },
+    },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet-async`,
     `gatsby-transformer-json`,
