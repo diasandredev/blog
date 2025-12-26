@@ -48,7 +48,7 @@ The "trust me, I know what I'm doing" operator. It forces a nullable value into 
 
 ### 🚨 The "Real World" Trap: Avro, Kafka, and toString() at iFood
 
-I wanted to wrap up with a practical lesson I've learned during my time at **iFood**. This is a mistake I've seen even senior devs make, and it’s a tricky one because **the IDE won’t warn you.**
+I wanted to wrap up with a practical lesson I've learned at **iFood**. This is a mistake I've seen even senior devs make, and it’s a tricky one because **the IDE won’t warn you.**
 
 * **The Scenario:** We use **Avro** to consume events from **Kafka**. When working with Avro, string values often come as a `CharSequence`. To map these into our internal Kotlin Data Classes, we need to call `.toString()` to get a proper `String`.
 * **The Mistake:** You assume that calling `.toString()` on that field is fine because it’s a common conversion.
@@ -61,5 +61,3 @@ I wanted to wrap up with a practical lesson I've learned during my time at **iFo
 **Bottom line:** Kotlin was built to make nulls explicit. Use that to your advantage and keep an eye out for those sneaky `toString()` conversions during PR reviews!
 
 Cheers! ✌️
-
-- - -
