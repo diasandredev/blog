@@ -12,6 +12,7 @@ const BlogContentWrapper = styled.div`
     text-align: justify;
     margin-bottom: var(--spacing-md);
     line-height: 1.8;
+    color: var(--color-text-primary);
   }
   
   img {
@@ -44,7 +45,7 @@ const BlogContentWrapper = styled.div`
   ul, ol {
     margin-left: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
   }
   
   li {
