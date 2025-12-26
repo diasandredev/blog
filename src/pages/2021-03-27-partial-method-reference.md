@@ -1,9 +1,10 @@
 ---
 layout: blog
+hidden: true
 path: /kotlin-partial-method-reference
 title: Partial method reference
-date: 2021-03-27T14:20:30.890Z
 tags: Kotlin
+date: 2021-03-27T14:20:30.890Z
 ---
 When you start working with Kotlin, as it's a programming language that mixes paradigms, it's common to build a chain of scope functions for better code.
 
@@ -36,6 +37,7 @@ list
     .also(::logItems)
     .let { items -> saveToFirebase(items, someValue) }
 ```
+
 To fix this problem, and we stay using method reference, I recommend `arrow-syntax`.
 
 #### Installing
@@ -50,7 +52,6 @@ It's important to remember that IntelliJ doesn't auto-import correct these funct
 therefore, it's necessary to add `import arrow.syntax.function.invoke` import to your classes.
 
 The function that will be called using `partial method reference` needs that the last parameter received is always the one coming from the chained methods, like in our example that receives a list of items:
-
 
 ```kotlin
 fun saveToFirebase(value: String, list: List<Item>) = service.save(list, value)
