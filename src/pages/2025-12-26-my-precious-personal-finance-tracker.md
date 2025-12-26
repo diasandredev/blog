@@ -3,6 +3,7 @@ layout: blog
 hidden: false
 path: /my-precious
 title: My Precious - Personal Finance Tracker
+topic: "Projects"
 tags: Javascript
 date: 2025-12-26T21:25:08.927Z
 ---
@@ -18,8 +19,6 @@ The project is a **Single Page Application (SPA)** built with **React** and **Vi
 * **Local Storage**: IndexedDB (via `idb`).
 * **Backend/Cloud**: Firebase (Auth & Firestore).
 * **Charts**: Recharts & Chart.js.
-
-- - -
 
 ## ✨ Featured Features
 
@@ -116,5 +115,3 @@ To run the project locally:
    ```
    npm run dev
    ```
-
-- - -
