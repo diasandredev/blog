@@ -1,8 +1,10 @@
 ---
 layout: blog
+hidden: true
 path: /tempo-release
-title: How to manipulate dates easily?
-tags: GitHub,Kotlin
+title: "How to manipulate dates easily? Tempo is the answer!"
+topic: "Projects"
+tags: Kotlin
 date: 2023-02-22T21:23:29.394Z
 ---
 Hello there,

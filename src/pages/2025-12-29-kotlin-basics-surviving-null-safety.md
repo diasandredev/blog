@@ -1,8 +1,9 @@
 ---
 layout: blog
 hidden: false
-path: /kotlin-basics-null-safety
-title: "[Kotlin basics] Surviving Null Safety"
+path: /kotlin-basics-surviving-null-safety
+title: "Surviving Null Safety"
+topic: "Kotlin Basics"
 tags: Kotlin
 date: 2025-12-26T13:58:44.853Z
 ---

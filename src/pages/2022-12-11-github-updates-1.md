@@ -1,7 +1,9 @@
 ---
 layout: blog
+hidden: true
 path: /github-updates-1
-title: "Github updates #1"
+title: "GitHub Updates #1"
+topic: "GitHub"
 tags: GitHub
 date: 2022-12-11T23:36:43.403Z
 ---

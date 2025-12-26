@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const PostCard = styled.div`
   background-color: var(--color-bg-secondary);
   border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  padding: 1.2rem;
   margin-bottom: var(--spacing-md);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid transparent;
@@ -16,24 +16,12 @@ const PostCard = styled.div`
   }
 `;
 
-const PostTitle = styled.h3`
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
-  
-  a {
-    color: var(--color-text-primary);
-    
-    &:hover {
-      color: var(--color-accent);
-    }
-  }
-`;
+
 
 const MetaRow = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
   flex-wrap: wrap;
 `;
 
@@ -87,25 +75,51 @@ const buildTagsColors = (tags) =>
     };
   });
 
+const Topic = styled.span`
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+  display: block;
+`;
+
+const PostTitle = styled.h3`
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  
+  a {
+    color: var(--color-text-primary);
+    
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+`;
+
 const Post = ({ post }) => {
   const hasTags = post.tags != null && post.tags.length > 0;
   const tags = hasTags ? buildTagsColors(post.tags) : [];
 
   return (
     <PostCard>
+      {post.topic && <Topic>{post.topic}</Topic>}
+
       <PostTitle>
         <Link to={post.path}>{post.title}</Link>
       </PostTitle>
 
+      {tags.length > 0 && (
+        <TagsWrapper style={{ marginBottom: '0.5rem' }}>
+          {tags.map((tag, index) => (
+            <Tag key={index} color={tag.color}>{tag.text}</Tag>
+          ))}
+        </TagsWrapper>
+      )}
+
       <MetaRow>
         <DateText>{post.dateFormatted}</DateText>
-        {tags.length > 0 && (
-          <TagsWrapper>
-            {tags.map((tag, index) => (
-              <Tag key={index} color={tag.color}>{tag.text}</Tag>
-            ))}
-          </TagsWrapper>
-        )}
       </MetaRow>
     </PostCard>
   );

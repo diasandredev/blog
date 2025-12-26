@@ -30,6 +30,7 @@ export const query = graphql`
           externalurl
           date
           tags
+          topic
         }
       }
     }

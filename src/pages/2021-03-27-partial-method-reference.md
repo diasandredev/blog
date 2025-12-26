@@ -2,7 +2,8 @@
 layout: blog
 hidden: true
 path: /kotlin-partial-method-reference
-title: Partial method reference
+title: "[Kotlin] Partial Method Reference"
+topic: "Kotlin"
 tags: Kotlin
 date: 2021-03-27T14:20:30.890Z
 ---

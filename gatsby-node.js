@@ -64,6 +64,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   const typeDefs = `
     type MarkdownRemarkFrontmatter implements Node {
       hidden: Boolean
+      topic: String
     }
   `;
   createTypes(typeDefs);

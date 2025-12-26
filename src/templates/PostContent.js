@@ -83,12 +83,7 @@ const PostHeaderWrapper = styled.div`
   margin-bottom: var(--spacing-lg);
 `;
 
-const PostTitle = styled.h1`
-  font-size: 3rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text-primary);
-  line-height: 1.1;
-`;
+
 
 const MetaRow = styled.div`
   display: flex;
@@ -147,11 +142,31 @@ const buildTagsColors = (tags) =>
     };
   });
 
+const Topic = styled.span`
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  display: block;
+`;
+
+const PostTitle = styled.h1`
+  font-size: 3rem;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+  line-height: 1.1;
+`;
+
+// ... (MetaRow, DateText, TagsWrapper, Tag, Topic components remain unchanged)
+
 const Template = ({
   data: {
     markdownRemark: {
       html,
-      frontmatter: { title, date, tags },
+      frontmatter: { title, date, tags, topic },
     },
   },
 }) => {
@@ -162,16 +177,20 @@ const Template = ({
   return (
     <Layout>
       <PostHeaderWrapper>
+        {topic && <Topic>{topic}</Topic>}
+
         <PostTitle>{title}</PostTitle>
+
+        {tagList.length > 0 && (
+          <TagsWrapper style={{ marginBottom: '1rem' }}>
+            {tagList.map((tag, index) => (
+              <Tag key={index} color={tag.color}>{tag.text}</Tag>
+            ))}
+          </TagsWrapper>
+        )}
+
         <MetaRow>
           <DateText>{dateFormatted}</DateText>
-          {tagList.length > 0 && (
-            <TagsWrapper>
-              {tagList.map((tag, index) => (
-                <Tag key={index} color={tag.color}>{tag.text}</Tag>
-              ))}
-            </TagsWrapper>
-          )}
         </MetaRow>
       </PostHeaderWrapper>
       <BlogContentWrapper
@@ -189,6 +208,7 @@ export const query = graphql`
         title
         date
         tags
+        topic
       }
     }
   }
