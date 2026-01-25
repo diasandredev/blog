@@ -15,7 +15,7 @@ const BackLink = styled(Link)`
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 500;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
   transition: color 0.2s;
   text-decoration: none;
 

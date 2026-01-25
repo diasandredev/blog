@@ -78,7 +78,7 @@ const CompanyLink = styled.span`
   transition: all 0.2s ease;
 
   &:hover {
-    text-shadow: 0 0 8px var(--color-accent);
+    /* text-shadow: 0 0 8px var(--color-accent); */
   }
 
   &::after {

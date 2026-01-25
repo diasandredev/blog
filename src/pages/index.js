@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
 `;
 
 const SectionTitle = styled.h2`

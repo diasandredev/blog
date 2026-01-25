@@ -16,7 +16,7 @@ const MainWrapper = styled.div`
 
 const ContentWrapper = styled.main`
   flex: 1;
-  padding-top: ${(props) => props.paddingTop || 'var(--spacing-lg)'};
+  padding-top: ${(props) => props.paddingTop || 'var(--spacing-md)'};
   padding-bottom: var(--spacing-lg);
   width: 100%;
 `;

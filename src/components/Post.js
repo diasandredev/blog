@@ -4,17 +4,31 @@ import styled from 'styled-components';
 
 const PostCard = styled.div`
   position: relative;
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--color-border);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid transparent; /* Hidden by default or remove completely */
   transition: all 0.3s ease;
+`;
+
+const ReadMoreLink = styled(Link)`
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-weight: 600;
+
+  ${PostCard}:hover & {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
   &:hover {
-    border-bottom-color: var(--color-accent);
-    background: linear-gradient(
-      90deg,
-      rgba(0, 240, 255, 0.03) 0%,
-      transparent 100%
-    );
+    text-decoration: underline;
   }
 `;
 
@@ -121,9 +135,10 @@ const PostTitle = styled.h3`
 
   a {
     color: var(--color-text-primary);
+    text-decoration: none;
 
     &:hover {
-      color: var(--color-accent);
+      color: var(--color-text-primary);
     }
   }
 `;
@@ -173,6 +188,8 @@ const Post = ({ post, onFilter }) => {
       <MetaRow>
         <DateText>{post.dateFormatted}</DateText>
       </MetaRow>
+
+      <ReadMoreLink to={post.path}>read {'->'}</ReadMoreLink>
     </PostCard>
   );
 };

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const DockWrapper = styled.div`
-  margin-top: var(--spacing-xl);
   width: 100%;
   background: var(--color-bg-secondary);
   backdrop-filter: blur(12px);
@@ -54,7 +53,7 @@ const ProjectItem = styled.a`
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-6px);
+    transform: translateY(-2px);
     color: var(--color-accent);
   }
 `;
@@ -74,8 +73,7 @@ const IconWrapper = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.05);
 
   ${ProjectItem}:hover & {
-    box-shadow: 0 8px 20px rgba(0, 240, 255, 0.15); /* Accent glow */
-    border-color: var(--color-accent);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
   }
 `;
 
