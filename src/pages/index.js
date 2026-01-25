@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
 import Content from '../components/Content';
+import Seo from '../components/SEO';
 import { mapData } from '../helpers/postsHelper';
 
 import styled from 'styled-components';
@@ -30,8 +31,14 @@ const FilterBadge = styled.div`
   animation: fadeIn 0.3s ease;
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;
 
@@ -80,23 +87,32 @@ const IndexPage = ({ data }) => {
 
   const filteredContent = filter
     ? allContent.filter((post) => {
-      if (filter.type === 'topic') return post.topic === filter.value;
-      if (filter.type === 'tag') {
-        return post.tags && post.tags.split(',').map(t => t.trim()).includes(filter.value);
-      }
-      return true;
-    })
+        if (filter.type === 'topic') return post.topic === filter.value;
+        if (filter.type === 'tag') {
+          return (
+            post.tags &&
+            post.tags
+              .split(',')
+              .map((t) => t.trim())
+              .includes(filter.value)
+          );
+        }
+        return true;
+      })
     : allContent;
 
   return (
     <Layout paddingTop="0">
+      <Seo title="Home" />
       <HeaderContainer>
         <SectionTitle>Posts</SectionTitle>
         {filter && (
           <FilterBadge>
             <FilterLabel>Filtering by {filter.type}:</FilterLabel>
             <FilterValue>{filter.value}</FilterValue>
-            <ClearButton onClick={clearFilter} title="Clear filter">×</ClearButton>
+            <ClearButton onClick={clearFilter} title="Clear filter">
+              ×
+            </ClearButton>
           </FilterBadge>
         )}
       </HeaderContainer>
@@ -109,24 +125,22 @@ export default IndexPage;
 
 export const query = graphql`
   query HomepageQuery {
-  allMarkdownRemark(
-    sort: {frontmatter: {date: DESC}}
-    filter: {frontmatter: {hidden: {ne: true}}}
-  ) {
-    edges {
-      node {
-        frontmatter {
-          title
-          path
-          externalurl
-          date
-          tags
-          topic
+    allMarkdownRemark(
+      sort: { frontmatter: { date: DESC } }
+      filter: { frontmatter: { hidden: { ne: true } } }
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            path
+            externalurl
+            date
+            tags
+            topic
+          }
         }
       }
     }
   }
-}
 `;
-
-

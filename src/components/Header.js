@@ -3,6 +3,7 @@ import { StaticQuery, graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 import HeaderSocial from './HeaderSocial';
 import ProjectsDock from './ProjectsDock';
+import ThemeToggle from './ThemeToggle';
 
 const HeaderWrapper = styled.header`
   padding: var(--spacing-lg) 0;
@@ -16,6 +17,12 @@ const TitleRow = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  gap: var(--spacing-md);
+`;
+
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
   gap: var(--spacing-md);
 `;
 
@@ -50,7 +57,7 @@ const CompanyLink = styled.span`
   color: var(--color-accent);
   cursor: pointer;
   font-weight: 500;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -72,9 +79,7 @@ const Header = ({
           <React.Fragment key={sIndex}>
             {segment}
             {sIndex < array.length - 1 && (
-              <CompanyLink onClick={goToCompanyUrl}>
-                {company}
-              </CompanyLink>
+              <CompanyLink onClick={goToCompanyUrl}>{company}</CompanyLink>
             )}
           </React.Fragment>
         ))}
@@ -86,7 +91,10 @@ const Header = ({
     <HeaderWrapper>
       <TitleRow>
         <TitleLink to="/">{title}</TitleLink>
-        <HeaderSocial />
+        <Actions>
+          <ThemeToggle />
+          <HeaderSocial />
+        </Actions>
       </TitleRow>
       <Description>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

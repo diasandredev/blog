@@ -1,1 +1,1 @@
-require("prismjs/themes/prism-tomorrow.css")
+// Prism styles are now handled in GlobalStyles.js to support theming

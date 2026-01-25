@@ -21,6 +21,59 @@ const GlobalStyles = createGlobalStyle`
     
     --radius-md: 8px;
     --radius-lg: 12px;
+    
+    /* Tooltip Default (Dark Mode -> Light Tooltip) or Dark Tooltip for Dark Mode? 
+       Usually tooltips are inverse or dark. Let's make it inverse for pop.
+    */
+    --color-tooltip-bg: #f8fafc;
+    --color-tooltip-text: #0f172a;
+  }
+
+  body.light-mode {
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f1f5f9;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-accent: #0284c7;
+    --color-accent-hover: #0369a1;
+    --color-border: #e2e8f0;
+    
+    /* Tooltip Light Mode -> Dark Tooltip */
+    --color-tooltip-bg: #1e293b;
+    --color-tooltip-text: #f8fafc;
+  }
+
+  /* PrismJS Theme Variables */
+  :root {
+    /* Dark Mode - Dracula inspired to match blueish theme */
+    --prism-bg: #1e293b; /* Matches --color-bg-secondary */
+    --prism-text: #f8f8f2;
+    --prism-comment: #6272a4;
+    --prism-keyword: #ff79c6;
+    --prism-boolean: #bd93f9;
+    --prism-function: #50fa7b;
+    --prism-string: #f1fa8c;
+    --prism-variable: #8be9fd;
+    --prism-operator: #ff79c6;
+    --prism-class: #8be9fd;
+    --prism-punctuation: #f8f8f2;
+    --prism-selection: #44475a;
+  }
+
+  body.light-mode {
+    /* Light Mode - Based on One Light / GitHub Light */
+    --prism-bg: #f6f8fa;
+    --prism-text: #24292e;
+    --prism-comment: #6a737d;
+    --prism-keyword: #d73a49;
+    --prism-boolean: #005cc5;
+    --prism-function: #6f42c1;
+    --prism-string: #032f62;
+    --prism-variable: #e36209;
+    --prism-operator: #d73a49;
+    --prism-class: #6f42c1;
+    --prism-punctuation: #24292e;
+    --prism-selection: #b3d4fc;
   }
 
   /* Reset & Base */
@@ -81,6 +134,119 @@ const GlobalStyles = createGlobalStyle`
 
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-secondary); 
+  }
+
+  /* PrismJS Styles */
+  code[class*="language-"],
+  pre[class*="language-"] {
+    color: var(--prism-text);
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  /* Code blocks */
+  pre[class*="language-"] {
+    padding: 1em;
+    margin: .5em 0;
+    overflow: auto;
+    background: var(--prism-bg);
+    border-radius: var(--radius-md);
+  }
+
+  /* Inline code */
+  :not(pre) > code[class*="language-"] {
+    padding: .1em;
+    border-radius: .3em;
+    white-space: normal;
+    background: var(--prism-bg);
+  }
+
+  .token.comment,
+  .token.block-comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: var(--prism-comment);
+  }
+
+  .token.punctuation {
+    color: var(--prism-punctuation);
+  }
+
+  .token.tag,
+  .token.attr-name,
+  .token.namespace,
+  .token.deleted {
+    color: var(--prism-keyword);
+  }
+
+  .token.function-name {
+    color: var(--prism-function);
+  }
+
+  .token.boolean,
+  .token.number,
+  .token.function {
+    color: var(--prism-function);
+  }
+
+  .token.property,
+  .token.class-name,
+  .token.constant,
+  .token.symbol {
+    color: var(--prism-class);
+  }
+
+  .token.selector,
+  .token.important,
+  .token.atrule,
+  .token.keyword,
+  .token.builtin {
+    color: var(--prism-keyword);
+  }
+
+  .token.string,
+  .token.char,
+  .token.attr-value,
+  .token.regex,
+  .token.variable {
+    color: var(--prism-string);
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url {
+    color: var(--prism-operator);
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.entity {
+    cursor: help;
+  }
+
+  .token.inserted {
+    color: green;
   }
 `;
 

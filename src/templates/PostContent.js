@@ -1,26 +1,45 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import moment from 'moment';
 import styled from 'styled-components';
+import { FiArrowLeft, FiClock } from 'react-icons/fi';
 import Layout from '../components/Layout';
+import Seo from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
+
+const BackLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  margin-bottom: var(--spacing-lg);
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+`;
 
 const BlogContentWrapper = styled.div`
   margin-top: var(--spacing-lg);
   width: 100%;
-  
+
   p {
-    text-align: justify;
+    text-align: left;
     margin-bottom: var(--spacing-md);
     line-height: 1.8;
     color: var(--color-text-primary);
+    font-size: 1.1rem;
   }
-  
+
   img {
     width: 100%;
     margin: var(--spacing-md) 0;
     border-radius: var(--radius-md);
   }
-  
+
   blockquote {
     border-left: 4px solid var(--color-accent);
     background: var(--color-bg-secondary);
@@ -30,53 +49,29 @@ const BlogContentWrapper = styled.div`
     font-style: italic;
     color: var(--color-text-secondary);
   }
-  
-  h2, h3, h4 {
+
+  h2,
+  h3,
+  h4 {
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
     color: var(--color-text-primary);
   }
-  
+
   a {
     color: var(--color-accent);
     text-decoration: underline;
   }
-  
-  ul, ol {
+
+  ul,
+  ol {
     margin-left: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
     color: var(--color-text-primary);
   }
-  
+
   li {
     margin-bottom: var(--spacing-sm);
-  }
-  
-  /* Inline code */
-  :not(pre) > code[class*="language-"], 
-  code {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.9em;
-  }
-  
-  /* Code blocks */
-  pre[class*="language-"] {
-    background: var(--color-bg-secondary);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-    overflow-x: auto;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  /* Remove default prism shadows/radius if any */
-  pre[class*="language-"], 
-  code[class*="language-"] {
-    text-shadow: none !important;
-    box-shadow: none !important;
   }
 `;
 
@@ -84,18 +79,24 @@ const PostHeaderWrapper = styled.div`
   margin-bottom: var(--spacing-lg);
 `;
 
-
-
 const MetaRow = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
   flex-wrap: wrap;
+  margin-top: var(--spacing-sm);
+`;
+
+const MetaItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
 `;
 
 const DateText = styled.span`
   color: var(--color-text-secondary);
-  font-size: 1rem;
 `;
 
 const TagsWrapper = styled.div`
@@ -104,7 +105,7 @@ const TagsWrapper = styled.div`
 `;
 
 const Tag = styled.span`
-  background-color: ${props => props.color || 'var(--color-bg-primary)'};
+  background-color: ${(props) => props.color || 'var(--color-bg-primary)'};
   color: #1a1a1a;
   padding: 4px 10px;
   border-radius: 4px;
@@ -167,7 +168,8 @@ const Template = ({
   data: {
     markdownRemark: {
       html,
-      frontmatter: { title, date, tags, topic },
+      timeToRead,
+      frontmatter: { title, date, tags, topic, path },
     },
   },
 }) => {
@@ -177,6 +179,19 @@ const Template = ({
 
   return (
     <Layout>
+      <Seo
+        title={title}
+        description={`${
+          topic || 'Blog post'
+        } by André Dias. ${timeToRead} min read.`}
+        article={true}
+        pathname={path}
+      />
+
+      <BackLink to="/">
+        <FiArrowLeft /> Back to Posts
+      </BackLink>
+
       <PostHeaderWrapper>
         {topic && <Topic>{topic}</Topic>}
 
@@ -185,31 +200,41 @@ const Template = ({
         {tagList.length > 0 && (
           <TagsWrapper style={{ marginBottom: '1rem' }}>
             {tagList.map((tag, index) => (
-              <Tag key={index} color={tag.color}>{tag.text}</Tag>
+              <Tag key={index} color={tag.color}>
+                {tag.text}
+              </Tag>
             ))}
           </TagsWrapper>
         )}
 
         <MetaRow>
-          <DateText>{dateFormatted}</DateText>
+          <MetaItem>
+            <DateText>{dateFormatted}</DateText>
+          </MetaItem>
+          <MetaItem>
+            <FiClock /> <span>{timeToRead} min read</span>
+          </MetaItem>
         </MetaRow>
       </PostHeaderWrapper>
-      <BlogContentWrapper
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+
+      <BlogContentWrapper dangerouslySetInnerHTML={{ __html: html }} />
+
+      <ShareButtons title={title} url={path} />
     </Layout>
   );
 };
 
 export const query = graphql`
-  query($pathSlug: String!) {
+  query ($pathSlug: String!) {
     markdownRemark(frontmatter: { path: { eq: $pathSlug } }) {
       html
+      timeToRead
       frontmatter {
         title
         date
         tags
         topic
+        path
       }
     }
   }

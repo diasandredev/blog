@@ -28,7 +28,7 @@ const ProjectsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: var(--spacing-md);
   overflow: hidden;
-  max-height: ${props => props.$expanded ? '1000px' : '110px'};
+  max-height: ${(props) => (props.$expanded ? '1000px' : '110px')};
   transition: max-height 0.5s ease-in-out;
   padding: 4px; /* Space for shadows */
 `;
@@ -53,18 +53,18 @@ const IconWrapper = styled.div`
   width: 64px;
   height: 64px;
   border-radius: 14px;
-  background-color: ${props => props.bg || '#f0f0f0'};
+  background-color: ${(props) => props.bg || '#f0f0f0'};
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 8px;
   overflow: hidden;
   transition: box-shadow 0.2s;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 
   ${ProjectItem}:hover & {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -98,7 +98,7 @@ const ToggleButton = styled.button`
   font-size: 1.2rem;
   opacity: 0.6;
   transition: opacity 0.2s;
-  
+
   &:hover {
     opacity: 1;
     color: var(--color-accent);
@@ -107,12 +107,12 @@ const ToggleButton = styled.button`
 
 const TooltipBox = styled.div`
   position: absolute;
-  top: ${props => props.y}px;
-  left: ${props => props.x}px;
+  top: ${(props) => props.y}px;
+  left: ${(props) => props.x}px;
   transform: translate(12px, -50%);
-  background-color: rgba(15, 23, 42, 0.95);
+  background-color: var(--color-tooltip-bg);
   backdrop-filter: blur(4px);
-  color: var(--color-text-secondary);
+  color: var(--color-tooltip-text);
   padding: 6px 10px;
   border-radius: var(--radius-md);
   font-size: 0.75rem;
@@ -122,9 +122,9 @@ const TooltipBox = styled.div`
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
-  opacity: ${props => props.visible ? 1 : 0};
+  opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--color-border);
 
   &::after {
     content: '';
@@ -134,23 +134,32 @@ const TooltipBox = styled.div`
     margin-top: -6px;
     border-width: 6px;
     border-style: solid;
-    border-color: transparent rgba(15, 23, 42, 0.95) transparent transparent;
+    border-color: transparent var(--color-tooltip-bg) transparent transparent;
   }
 `;
 
 const ProjectsDock = () => {
   const [expanded, setExpanded] = useState(false);
-  const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, text: '' });
+  const [tooltip, setTooltip] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    text: '',
+  });
   const dockRef = React.useRef(null);
 
   // Dynamically load projects from src/projects
   // Using require.context to avoid needing restart/graphql schema updates
   let projects = [];
   try {
-    const projectContext = require.context('../projects', true, /config\.json$/);
+    const projectContext = require.context(
+      '../projects',
+      true,
+      /config\.json$/,
+    );
     const logoContext = require.context('../projects', true, /logo\.png$/);
 
-    projects = projectContext.keys().map(key => {
+    projects = projectContext.keys().map((key) => {
       const config = projectContext(key);
       const dir = key.split('/')[1]; // ./dir/config.json
       const logoKey = `./${dir}/logo.png`;
@@ -169,11 +178,11 @@ const ProjectsDock = () => {
 
       return {
         ...config,
-        logo: logoSrc
+        logo: logoSrc,
       };
     });
   } catch (err) {
-    console.warn("Could not load projects:", err);
+    console.warn('Could not load projects:', err);
   }
 
   const handleMouseEnter = (e, text) => {
@@ -184,13 +193,13 @@ const ProjectsDock = () => {
     setTooltip({
       visible: true,
       x: iconRect.right - dockRect.left,
-      y: iconRect.top - dockRect.top + (iconRect.height / 2),
-      text: text
+      y: iconRect.top - dockRect.top + iconRect.height / 2,
+      text: text,
     });
   };
 
   const handleMouseLeave = () => {
-    setTooltip(prev => ({ ...prev, visible: false }));
+    setTooltip((prev) => ({ ...prev, visible: false }));
   };
 
   if (projects.length === 0) return null;
@@ -200,7 +209,12 @@ const ProjectsDock = () => {
       <SectionTitle>some projects</SectionTitle>
       <ProjectsGrid $expanded={expanded}>
         {projects.map((p, i) => (
-          <ProjectItem key={i} href={p.url} target="_blank" rel="noopener noreferrer">
+          <ProjectItem
+            key={i}
+            href={p.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <IconWrapper
               bg={p.backgroundColor}
               onMouseEnter={(e) => handleMouseEnter(e, p.description)}
@@ -209,7 +223,13 @@ const ProjectsDock = () => {
               {p.logo ? (
                 <IconImage src={p.logo} alt={p.title} />
               ) : (
-                <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ccc' }}>
+                <span
+                  style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    color: '#ccc',
+                  }}
+                >
                   {p.title.charAt(0).toUpperCase()}
                 </span>
               )}
@@ -226,7 +246,10 @@ const ProjectsDock = () => {
       )}
 
       {projects.length > 5 && (
-        <ToggleButton onClick={() => setExpanded(!expanded)} aria-label="Show more projects">
+        <ToggleButton
+          onClick={() => setExpanded(!expanded)}
+          aria-label="Show more projects"
+        >
           {expanded ? <FaChevronUp /> : <FaChevronDown />}
         </ToggleButton>
       )}
