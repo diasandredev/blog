@@ -7,15 +7,17 @@ const FooterContainer = styled.footer`
   margin-top: auto;
   text-align: center;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  opacity: 0.6;
 `;
 
 const Footer = () => {
-    return (
-        <FooterContainer>
-            © {new Date().getFullYear()} André Dias. All rights reserved.
-        </FooterContainer>
-    );
+  return (
+    <FooterContainer>
+      © {new Date().getFullYear()} André Dias. All rights reserved.
+    </FooterContainer>
+  );
 };
 
 export default Footer;
