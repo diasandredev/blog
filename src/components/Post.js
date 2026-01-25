@@ -3,58 +3,74 @@ import { Link } from 'gatsby';
 import styled from 'styled-components';
 
 const PostCard = styled.div`
-  background-color: var(--color-bg-secondary);
-  border-radius: var(--radius-md);
-  padding: 1.2rem;
-  margin-bottom: var(--spacing-md);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid transparent;
+  position: relative;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-border);
+    border-bottom-color: var(--color-accent);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 240, 255, 0.03) 0%,
+      transparent 100%
+    );
   }
 `;
-
-
 
 const MetaRow = styled.div`
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 `;
 
 const DateText = styled.span`
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 0.8;
 `;
 
 const TagsWrapper = styled.div`
   display: flex;
   gap: var(--spacing-sm);
+  align-items: center;
 `;
 
 const Tag = styled.span`
-  background-color: ${props => props.color || 'var(--color-bg-primary)'};
-  color: #1a1a1a;
-  padding: 2px 8px;
-  border-radius: 4px;
+  color: ${(props) => props.color || 'var(--color-text-secondary)'};
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.2s;
+  position: relative;
+
+  &::before {
+    content: '#';
+    opacity: 0.5;
+    margin-right: 1px;
+  }
 
   &:hover {
-    opacity: 0.8;
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  &:not(:last-child)::after {
+    content: ',';
+    color: var(--color-text-secondary);
+    opacity: 0.5;
+    margin-left: 1px;
   }
 `;
 
 const buildTagsColors = (tags) =>
   tags.split(',').map((tag) => {
-    let color = '#e2e8f0'; // Default light gray
+    // Keep colors if needed, or unify to technical look
+    // For this aesthetic, maybe keep color text but remove background
+    let color = '#94a3b8'; // Default slate
 
     const t = tag.trim();
     switch (t) {
@@ -83,11 +99,12 @@ const buildTagsColors = (tags) =>
 
 const Topic = styled.span`
   color: var(--color-accent);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.25rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
   display: inline-block;
   cursor: pointer;
 
@@ -97,12 +114,14 @@ const Topic = styled.span`
 `;
 
 const PostTitle = styled.h3`
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
-  
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+
   a {
     color: var(--color-text-primary);
-    
+
     &:hover {
       color: var(--color-accent);
     }
@@ -131,11 +150,7 @@ const Post = ({ post, onFilter }) => {
 
   return (
     <PostCard>
-      {post.topic && (
-        <Topic onClick={handleTopicClick}>
-          {post.topic}
-        </Topic>
-      )}
+      {post.topic && <Topic onClick={handleTopicClick}>{post.topic}</Topic>}
 
       <PostTitle>
         <Link to={post.path}>{post.title}</Link>

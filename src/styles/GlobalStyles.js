@@ -3,15 +3,17 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   /* CSS Variables */
   :root {
-    --color-bg-primary: #0f172a;
-    --color-bg-secondary: #1e293b;
-    --color-text-primary: #f8fafc;
-    --color-text-secondary: #94a3b8;
-    --color-accent: #38bdf8;
-    --color-accent-hover: #0ea5e9;
-    --color-border: #334155;
+    --color-bg-primary: #0a0a0b;
+    --color-bg-secondary: rgba(255, 255, 255, 0.03);
+    --color-bg-glass: rgba(10, 10, 11, 0.7);
+    --color-text-primary: #ededed;
+    --color-text-secondary: #888888;
+    --color-accent: #00f0ff;
+    --color-accent-hover: #00bcd4;
+    --color-border: #27272a;
     
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
     --font-logo: 'Bebas Neue', cursive;
     
     --spacing-sm: 0.5rem;
@@ -45,24 +47,24 @@ const GlobalStyles = createGlobalStyle`
 
   /* PrismJS Theme Variables */
   :root {
-    /* Dark Mode - Dracula inspired to match blueish theme */
-    --prism-bg: #1e293b; /* Matches --color-bg-secondary */
-    --prism-text: #f8f8f2;
-    --prism-comment: #6272a4;
-    --prism-keyword: #ff79c6;
+    /* Dark Mode - Technical/Cyber Theme */
+    --prism-bg: rgba(255, 255, 255, 0.02);
+    --prism-text: #e0e0e0;
+    --prism-comment: #555555;
+    --prism-keyword: #ff0055;
     --prism-boolean: #bd93f9;
-    --prism-function: #50fa7b;
-    --prism-string: #f1fa8c;
-    --prism-variable: #8be9fd;
-    --prism-operator: #ff79c6;
-    --prism-class: #8be9fd;
-    --prism-punctuation: #f8f8f2;
-    --prism-selection: #44475a;
+    --prism-function: #f5b700;
+    --prism-string: #00f0ff;
+    --prism-variable: #00f0ff;
+    --prism-operator: #ff0055;
+    --prism-class: #f5b700;
+    --prism-punctuation: #888888;
+    --prism-selection: rgba(0, 240, 255, 0.2);
   }
 
   body.light-mode {
-    /* Light Mode - Based on One Light / GitHub Light */
-    --prism-bg: #f6f8fa;
+    /* Light Mode - Clean Technical */
+    --prism-bg: #f5f5f5;
     --prism-text: #24292e;
     --prism-comment: #6a737d;
     --prism-keyword: #d73a49;

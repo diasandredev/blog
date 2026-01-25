@@ -15,29 +15,39 @@ const HeaderContainer = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
   margin: 0;
+
+  &::before {
+    content: '> ';
+    color: var(--color-accent);
+  }
 `;
 
 const FilterBadge = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: var(--color-bg-secondary);
+  background-color: transparent;
   padding: 0.25rem 0.75rem;
-  border-radius: 2rem;
-  font-size: 0.9rem;
-  border: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  border: 1px dashed var(--color-accent);
+  border-radius: 4px;
   animation: fadeIn 0.3s ease;
 
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(5px);
+      transform: translateX(-10px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
 `;

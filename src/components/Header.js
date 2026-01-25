@@ -40,26 +40,63 @@ const TitleLink = styled(Link)`
   }
 `;
 
-const Description = styled.div`
-  background-color: var(--color-bg-secondary);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+const IntroContainer = styled.div`
+  margin-top: var(--spacing-md);
   color: var(--color-text-primary);
-  line-height: 1.5;
-  border-left: 4px solid var(--color-accent);
+  line-height: 1.6;
+  max-width: 100%;
+`;
 
-  p {
+const LeadParagraph = styled.p`
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.02em;
+
+  strong {
+    font-weight: 600;
     color: var(--color-text-primary);
   }
+`;
+
+const SubParagraph = styled.p`
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.7;
 `;
 
 const CompanyLink = styled.span`
   color: var(--color-accent);
   cursor: pointer;
   font-weight: 500;
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s ease;
 
   &:hover {
-    text-decoration: underline;
+    text-shadow: 0 0 8px var(--color-accent);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 `;
 
@@ -71,19 +108,19 @@ const Header = ({
   const { title, description, company, companyurl } = siteMetadata;
   const goToCompanyUrl = () => window.open(companyurl, '_blank');
 
-  // Helper to process description text
-  const renderDescription = () => {
-    return description.split('\n\n').map((paragraph, pIndex) => (
-      <p key={pIndex} style={{ marginBottom: '1rem', margin: 0 }}>
-        {paragraph.split(company).map((segment, sIndex, array) => (
-          <React.Fragment key={sIndex}>
-            {segment}
-            {sIndex < array.length - 1 && (
-              <CompanyLink onClick={goToCompanyUrl}>{company}</CompanyLink>
-            )}
-          </React.Fragment>
-        ))}
-      </p>
+  // Split description: First paragraph is lead, others are sub details
+  const paragraphs = description.split('\n\n');
+  const leadText = paragraphs[0];
+  const detailTexts = paragraphs.slice(1);
+
+  const renderTextWithCompany = (text) => {
+    return text.split(company).map((segment, sIndex, array) => (
+      <React.Fragment key={sIndex}>
+        {segment}
+        {sIndex < array.length - 1 && (
+          <CompanyLink onClick={goToCompanyUrl}>{company}</CompanyLink>
+        )}
+      </React.Fragment>
     ));
   };
 
@@ -96,11 +133,21 @@ const Header = ({
           <HeaderSocial />
         </Actions>
       </TitleRow>
-      <Description>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {renderDescription()}
-        </div>
-      </Description>
+
+      <IntroContainer>
+        <LeadParagraph>{renderTextWithCompany(leadText)}</LeadParagraph>
+
+        {detailTexts.map((text, i) => (
+          <SubParagraph key={i}>
+            {/* Add a subtle terminal-like arrow for detail paragraphs */}
+            <span style={{ color: 'var(--color-accent)', marginRight: '8px' }}>
+              &gt;
+            </span>
+            {renderTextWithCompany(text)}
+          </SubParagraph>
+        ))}
+      </IntroContainer>
+
       <ProjectsDock />
     </HeaderWrapper>
   );
