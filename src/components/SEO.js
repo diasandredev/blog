@@ -15,11 +15,16 @@ const SEO = ({ title, description, pathname, image, article }) => {
   };
 
   return (
-    <Helmet title={title} titleTemplate={`%s | ${defaultTitle}`}>
+    <Helmet
+      title={title}
+      titleTemplate={`%s | ${defaultTitle}`}
+      htmlAttributes={{ lang: 'en' }}
+    >
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
 
       {seo.url && <meta property="og:url" content={seo.url} />}
+      {seo.url && <link rel="canonical" href={seo.url} />}
       {(article ? true : null) && <meta property="og:type" content="article" />}
       {seo.title && <meta property="og:title" content={seo.title} />}
       {seo.description && (
@@ -48,7 +53,7 @@ const query = graphql`
       siteMetadata {
         defaultTitle: title
         defaultDescription: description
-        siteUrl: companyurl
+        siteUrl
       }
     }
   }

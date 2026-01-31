@@ -27,6 +27,33 @@ My work focuses on solving the complex distributed systems challenges that come 
       },
     },
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://diasandre.com',
+        sitemap: 'https://diasandre.com/sitemap-index.xml',
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `andré dias da silva`,
+        short_name: `André Dias`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icons: [
+          {
+            src: `/favicon.ico`,
+            sizes: `64x64 32x32 24x24 16x16`,
+            type: `image/x-icon`,
+          },
+        ],
+      },
+    },
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
